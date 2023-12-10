@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/popup.css">
+    <link rel="stylesheet" href="css/loader.css">
+</head>
+<body>
+<div class="wrapper">
+    <!-- LOADING WINDOW START -->
+    <div class="loading-window">
+        <span class="loader"></span>
+    </div>
+    <!-- LOADING WINDOW END -->
+
+    <!-- AUTH WINDOW START -->
+    <div class="auth-window d-none">
+        <input id="login-field" type="text" class="input-field" placeholder="Логин">
+        <input id="password-field" type="password" class="input-field" placeholder="Пароль">
+        <button class="btn" id="auth-btn">ВОЙТИ</button>
+    </div>
+    <!-- AUTH WINDOW END -->
+
+    <!-- CONTENT WINDOW START -->
+    <div class="content-window d-none">
+        CONTENT
+    </div>
+    <!-- CONTENT WINDOW END -->
+</div>
+</body>
+<script src="../common/axios.min.js"></script>
+<script src="../common/api.js"></script>
+<script src="js/popup.js"></script>
+</html>
