@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="css/popup.css">
     <link rel="stylesheet" href="css/loader.css">
+    <link rel="stylesheet" href="css/auth.css">
+    <link rel="stylesheet" href="css/content.css">
 </head>
 <body>
 <div class="wrapper">
@@ -18,17 +20,28 @@
         <input id="login-field" type="text" class="input-field" placeholder="Логин">
         <input id="password-field" type="password" class="input-field" placeholder="Пароль">
         <button class="btn" id="auth-btn">ВОЙТИ</button>
+        <div class="auth-error-container"></div>
     </div>
     <!-- AUTH WINDOW END -->
 
     <!-- CONTENT WINDOW START -->
     <div class="content-window d-none">
-        CONTENT
+        <span class="gradient-brand-text content-header-text">Antoxer.Praktikum</span>
+        <div class="content-body">
+            <a class="default-link" href="https://praktikum.antoxer.ru/" target="_blank">Редактировать шаблоны</a>
+        </div>
+        <div class="content-footer">
+            <div class="auth-toolbar">
+                <a class="link-dark" id="logout-btn" href="#">Выйти</a>
+            </div>
+        </div>
     </div>
     <!-- CONTENT WINDOW END -->
 </div>
 </body>
 <script src="../common/axios.min.js"></script>
+<script src="../common/storage.js"></script>
+<script src="../common/authToken.js"></script>
 <script src="../common/api.js"></script>
 <script src="js/popup.js"></script>
 </html>

@@ -1,31 +1,10 @@
 const BASE_URL = 'https://backend.praktikum.antoxer.ru/api/v1/'
 axios.defaults.baseURL = BASE_URL;
 
-async function getAuthToken() {
-    const result = await browser.storage.local.get('token');
-    console.log(result.token)
-    return result && result.token ? result.token : null;
-}
-
-
-function setHeader() {
-    getAuthToken().then(token => {
-        if (!token) {
-            clearHeader();
-        }
-        axios.defaults.headers.common.Authorization = `Token ${token}`;
-    })
-}
-
-
-function clearHeader() {
-    axios.defaults.headers.common.Authorization = null;
-}
-
 
 async function isAuthenticated() {
-    const result = await browser.storage.local.get('token');
-    if (!result || !result.token) {
+    const token = await getAuthToken();
+    if (!token) {
         return false;
     }
     return await testAPIAuth();
@@ -46,13 +25,26 @@ async function testAPIAuth() {
 
 
 async function sendAuthRequest(username, password) {
+    clearHeader();
+    const result = {success: true}
     try {
-        const result = await axios.post('users/auth/login', {username, password});
-        console.log(result)
+        const response = await axios.post('users/auth/login/', {username, password});
+        result.token = response.data.token;
     } catch (e) {
-        console.log(e)
+        result.success = false;
+        result.errorMessage = e.response.data[0];
+    }
+    return result;
+}
+
+async function sendLogoutRequest() {
+    try {
+        const response = await axios.post('users/auth/logout/');
+        return true;
+    } catch (e) {
+        return false;
     }
 }
 
 
-// setHeader();
+setHeader();

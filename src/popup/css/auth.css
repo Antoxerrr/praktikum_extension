@@ -1,0 +1,14 @@
+.auth-window {
+    display: flex;
+    flex-direction: column;
+    padding: 75px 25px;
+    gap: 25px;
+}
+
+.auth-error-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    color: #B3001B;
+}

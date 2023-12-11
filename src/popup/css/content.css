@@ -1,0 +1,26 @@
+.content-window {
+    display: flex;
+    flex-direction: column;
+    padding: 25px 20px;
+    gap: 25px;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.content-header-text {
+    font-size: 11pt;
+}
+
+.content-body .default-link {
+    font-size: 12pt;
+}
+
+.content-footer {
+    margin-top: auto;
+    width: 100%;
+}
+
+#logout-btn {
+    float: right;
+}

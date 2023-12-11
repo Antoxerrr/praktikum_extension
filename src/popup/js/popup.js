@@ -35,20 +35,51 @@ function showContent() {
     showByClass(CONTENT_WINDOW_CLS);
 }
 
+
+function getAuthErrorContainer() {
+    return document.getElementsByClassName('auth-error-container')[0];
+}
+
+
+function setAuthErrorMessage(message) {
+    getAuthErrorContainer().innerText = message;
+}
+
+
 function checkAuth() {
     showLoading();
-    isAuthenticated().then(result => {
-        result ? showContent() : showAuth();
+    isAuthenticated().then(authenticated => {
+        if (authenticated) {
+            showContent();
+        } else {
+            showAuth();
+            storage.local.remove('token');
+        }
     });
 }
 
 
-async function Authenticate() {
+async function authenticate() {
+    setAuthErrorMessage('');
     const login = document.getElementById('login-field').value;
     const password = document.getElementById('password-field').value;
-    sendAuthRequest(login, password).then(console.log)
+    const result = await sendAuthRequest(login, password);
+    if (result.success) {
+        await storage.local.set({token: result.token});
+        setHeader();
+        checkAuth();
+    } else {
+        setAuthErrorMessage(result.errorMessage)
+    }
 }
 
-document.getElementById('auth-btn').addEventListener('click', Authenticate);
+async function logout() {
+    const success = await sendLogoutRequest();
+    if (success) {
+        checkAuth();
+    }
+}
 
+document.getElementById('auth-btn').addEventListener('click', authenticate);
+document.getElementById('logout-btn').addEventListener('click', logout);
 checkAuth();
