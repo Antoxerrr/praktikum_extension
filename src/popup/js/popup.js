@@ -10,14 +10,14 @@ function hideAllWindows() {
         AUTH_WINDOW_CLS
     ]
     for (const windowCls of allWindowsClasses) {
-        document.getElementsByClassName(windowCls)[0].classList.add(DISPLAY_NONE_CLS);
+        $('.' + windowCls).addClass(DISPLAY_NONE_CLS);
     }
 }
 
 
 function showByClass(cls) {
     hideAllWindows();
-    document.getElementsByClassName(cls)[0].classList.remove(DISPLAY_NONE_CLS);
+    $('.' + cls).removeClass(DISPLAY_NONE_CLS);
 }
 
 
@@ -37,12 +37,12 @@ function showContent() {
 
 
 function getAuthErrorContainer() {
-    return document.getElementsByClassName('auth-error-container')[0];
+    return $('.auth-error-container');
 }
 
 
 function setAuthErrorMessage(message) {
-    getAuthErrorContainer().innerText = message;
+    getAuthErrorContainer().text(message);
 }
 
 
@@ -61,8 +61,8 @@ function checkAuth() {
 
 async function authenticate() {
     setAuthErrorMessage('');
-    const login = document.getElementById('login-field').value;
-    const password = document.getElementById('password-field').value;
+    const login = $('#login-field').val();
+    const password = $('#password-field').val();
     const result = await sendAuthRequest(login, password);
     if (result.success) {
         await storage.local.set({token: result.token});
@@ -80,6 +80,7 @@ async function logout() {
     }
 }
 
-document.getElementById('auth-btn').addEventListener('click', authenticate);
-document.getElementById('logout-btn').addEventListener('click', logout);
+$('#auth-btn').click(authenticate);
+$('#logout-btn').click(logout);
+
 checkAuth();

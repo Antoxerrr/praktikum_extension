@@ -15,11 +15,10 @@ function containsOneOf(target, items) {
 
 
 function callback(mutationList, observer) {
-    console.log(mutationList)
     for (const mutation of mutationList) {
         for (const node of mutation.addedNodes) {
             if (node.classList && containsOneOf(node.classList, CLASSES_TO_FIND_CONTAINER)) {
-                renderTemplatesUI();
+                renderUI().then(r => {});
                 return;
             }
         }

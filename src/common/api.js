@@ -15,10 +15,8 @@ async function testAPIAuth() {
     const token = await getAuthToken() || '';
     try {
         const result = await axios.get('comments/templates');
-        console.log(result)
         return true;
     } catch (e) {
-        console.log(e.request)
         return false;
     }
 }
@@ -37,6 +35,7 @@ async function sendAuthRequest(username, password) {
     return result;
 }
 
+
 async function sendLogoutRequest() {
     try {
         const response = await axios.post('users/auth/logout/');
@@ -44,6 +43,26 @@ async function sendLogoutRequest() {
     } catch (e) {
         return false;
     }
+}
+
+
+async function requestDataOrError(url, errorMessage) {
+    try {
+        const response = await axios.get(url);
+        return response.data;
+    } catch (e) {
+        throw new Error(errorMessage)
+    }
+}
+
+
+async function getProjectsListRequest() {
+    return await requestDataOrError('comments/projects/', 'Не удалось получить список проектов.');
+}
+
+
+async function getCommentTemplatesRequest() {
+    return await requestDataOrError('comments/templates/', 'Не удалось получить список шаблонов комментариев.');
 }
 
 
