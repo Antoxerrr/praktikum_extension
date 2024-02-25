@@ -46,9 +46,9 @@ async function sendLogoutRequest() {
 }
 
 
-async function requestDataOrError(url, errorMessage) {
+async function requestDataOrError(url, errorMessage, params, data) {
     try {
-        const response = await axios.get(url);
+        const response = await axios.get(url, {params: params || {}, data: data || {}});
         return response.data;
     } catch (e) {
         throw new Error(errorMessage)
@@ -61,8 +61,12 @@ async function getProjectsListRequest() {
 }
 
 
-async function getCommentTemplatesRequest() {
-    return await requestDataOrError('comments/templates/', 'Не удалось получить список шаблонов комментариев.');
+async function getCommentTemplatesRequest(params) {
+    return await requestDataOrError(
+        'comments/templates/',
+        'Не удалось получить список шаблонов комментариев.',
+        params
+    );
 }
 
 

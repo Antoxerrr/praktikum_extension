@@ -25,13 +25,32 @@ function renderError(rootNode, errorText) {
 }
 
 
+async function renderTemplateList(rootNode) {
+    const projectId = getProjectFilterValue();
+    const search = getSearchFilterValue();
+    const commentTemplatesList = await getCommentTemplatesRequest({search, project_id: projectId});
+    $('.comment-templates-container').remove();
+    $(commentTemplateListComponent(commentTemplatesList)).appendTo(rootNode);
+}
+
+
+async function renderFilters(rootNode) {
+    const projectsList = await getProjectsListRequest();
+    const filterBar = $(filterBarComponent()).appendTo(rootNode);
+    const projectSelect = $(selectProjectComponent(projectsList));
+    const templateFilter = $(filterSnippetsComponent());
+    const onFilterUpdate = () => renderTemplateList(rootNode);
+    projectSelect.appendTo(filterBar);
+    templateFilter.appendTo(filterBar);
+    templateFilter.on('keyup', onFilterUpdate);
+    projectSelect.change(onFilterUpdate);
+}
+
+
 async function renderTemplatesUI(rootNode, editorContainer) {
-    const textarea = $(editorContainer).find(TEXTAREA_SELECTOR);
     try {
-        const projectsList = await getProjectsListRequest();
-        const commentTemplatesList = await getCommentTemplatesRequest();
-        $(selectProjectComponent(projectsList)).appendTo(rootNode);
-        $(commentTemplateListComponent(commentTemplatesList, textarea)).appendTo(rootNode);
+        await renderFilters(rootNode);
+        await renderTemplateList(rootNode);
     } catch (e) {
         return renderError(rootNode, e + '');
     }

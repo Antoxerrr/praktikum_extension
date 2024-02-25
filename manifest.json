@@ -12,9 +12,12 @@
       "js": [
         "src/common/jquery.min.js",
         "src/common/axios.min.js",
+        "src/common/marked.esm.js",
+        "src/common/highlight.min.js",
         "src/common/storage.js",
         "src/common/authToken.js",
         "src/common/api.js",
+        "src/content/filters.js",
         "src/content/components.js",
         "src/content/render.js",
         "src/content/main.js"
